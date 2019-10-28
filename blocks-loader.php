@@ -8,6 +8,8 @@
  * @since       0.1.0
  */
 
+use PosternoBlocks\Helper;
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -51,6 +53,8 @@ add_action(
 			PNO_VERSION,
 			true
 		);
+
+		wp_localize_script( 'posterno-blocks', 'posterno_blocks', Helper::get_js_vars() );
 
 	}
 );
