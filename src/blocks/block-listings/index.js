@@ -10,20 +10,16 @@ import EditBlock from './edit';
 
 // Register the block.
 registerBlockType( 'posterno/listings', {
-	title: __('Listings'),
-	description: __('Display listings.'),
+	title: posterno_blocks.labels.listings.title,
+	description: posterno_blocks.labels.listings.description,
 	icon: 'grid-view',
 	category: 'posterno',
-	keywords: [
-		__('listing'),
-		__('list'),
-	],
+	keywords: posterno_blocks.labels.listings.keywords,
 
 	attributes: posterno_blocks.attributes.listings,
 
 	edit: EditBlock,
 
-	// Server side render.
 	save() {
 		return null;
 	}

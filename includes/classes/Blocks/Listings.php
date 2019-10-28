@@ -27,11 +27,19 @@ class Listings {
 		return [
 			'number'    => [
 				'type'    => 'number',
-				'default' => 5,
+				'default' => 12,
 			],
-			'showpages' => [
+			'show_featured_only' => [
 				'type'    => 'boolean',
-				'default' => true,
+				'default' => false,
+			],
+			'pagination' => [
+				'type'    => 'boolean',
+				'default' => false,
+			],
+			'sorter' => [
+				'type'    => 'boolean',
+				'default' => false,
 			],
 		];
 	}

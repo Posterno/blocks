@@ -16,6 +16,7 @@ import { InspectorControls } from '@wordpress/block-editor';
 
 // Build the editor settings.
 export default function (props) {
+
 		const {
 			attributes,
 			setAttributes
@@ -23,15 +24,19 @@ export default function (props) {
 
 		const {
 			number,
-			showpages
+			show_featured_only,
+			pagination,
+			sorter,
 		} = attributes;
 
-		const inspectorControls = el(
+		const settings = el(
 			InspectorControls,
 			null,
+
+			// Query settings panel.
 			el(
 				PanelBody, {
-					title: __('List Last Changes Settings')
+					title: posterno_blocks.labels.listings.panel_query
 				},
 				el(
 					QueryControls, {
@@ -43,21 +48,52 @@ export default function (props) {
 				),
 				el(
 					ToggleControl, {
-						label: __('Show changed pages'),
-						checked: showpages,
+						label: posterno_blocks.labels.listings.featured,
+						checked: show_featured_only,
 						onChange: function () {
 							setAttributes({
-								showpages: !showpages
+								show_featured_only: !show_featured_only
+							});
+						},
+					}
+				)
+			),
+
+			// Layout settings panel.
+			el(
+				PanelBody, {
+					title: posterno_blocks.labels.listings.panel_layout,
+					initialOpen: false
+				},
+
+				el(
+					ToggleControl, {
+						label: posterno_blocks.labels.listings.pagination,
+						checked: pagination,
+						onChange: function () {
+							setAttributes({
+								pagination: !pagination
 							});
 						},
 					}
 				),
-
+				el(
+					ToggleControl, {
+						label: posterno_blocks.labels.listings.sorter,
+						checked: sorter,
+						onChange: function () {
+							setAttributes({
+								sorter: !sorter
+							});
+						},
+					}
+				),
 			),
+
 		);
 
 		return [
-			inspectorControls,
+			settings,
 			el(ServerSideRender, {
 				block: "posterno/listings",
 				attributes: props.attributes,

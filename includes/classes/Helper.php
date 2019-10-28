@@ -28,9 +28,27 @@ class Helper {
 	public static function get_js_vars() {
 		return [
 			'pno_svg_logo' => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+
 			'attributes'   => [
 				'listings' => Listings::get_attributes(),
 			],
+
+			'labels'       => [
+				'listings' => [
+					'title'        => esc_html__( 'Listings' ),
+					'description'  => esc_html__( 'Display listings.' ),
+					'keywords'     => [
+						esc_html__( 'list' ),
+						esc_html__( 'listing' ),
+					],
+					'panel_query'  => esc_html__( 'Query settings' ),
+					'panel_layout' => esc_html__( 'Results layout' ),
+					'featured'     => esc_html__( 'Show featured listings only' ),
+					'pagination'   => esc_html__( 'Show pagination' ),
+					'sorter'   => esc_html__( 'Show sorting dropdown' ),
+				],
+			],
+
 		];
 	}
 
