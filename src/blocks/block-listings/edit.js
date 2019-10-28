@@ -10,6 +10,7 @@ import {
 	QueryControls,
 	ToggleControl,
 	ServerSideRender,
+	SelectControl,
 } from '@wordpress/components';
 
 import { InspectorControls } from '@wordpress/block-editor';
@@ -27,6 +28,7 @@ export default function (props) {
 			show_featured_only,
 			pagination,
 			sorter,
+			sort,
 		} = attributes;
 
 		const settings = el(
@@ -55,6 +57,16 @@ export default function (props) {
 								show_featured_only: !show_featured_only
 							});
 						},
+					}
+				),
+				el(
+					SelectControl, {
+						label: posterno_blocks.labels.listings.sort,
+						value: sort,
+						options: {},
+						onChange: (value) => props.setAttributes({
+							sort: value
+						}),
 					}
 				)
 			),

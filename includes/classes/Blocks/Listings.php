@@ -25,7 +25,7 @@ class Listings {
 	 */
 	public static function get_attributes() {
 		return [
-			'number'    => [
+			'number'             => [
 				'type'    => 'number',
 				'default' => absint( pno_get_listings_results_per_page_options() ),
 			],
@@ -33,13 +33,17 @@ class Listings {
 				'type'    => 'boolean',
 				'default' => false,
 			],
-			'pagination' => [
+			'pagination'         => [
 				'type'    => 'boolean',
 				'default' => false,
 			],
-			'sorter' => [
+			'sorter'             => [
 				'type'    => 'boolean',
 				'default' => false,
+			],
+			'sort'               => [
+				'type'    => 'string',
+				'default' => pno_get_option( 'listings_default_order', 'newest' ),
 			],
 		];
 	}

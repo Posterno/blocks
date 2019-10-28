@@ -27,13 +27,15 @@ class Helper {
 	 */
 	public static function get_js_vars() {
 		return [
-			'pno_svg_logo' => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+			'pno_svg_logo'  => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
 
-			'attributes'   => [
+			'attributes'    => [
 				'listings' => Listings::get_attributes(),
 			],
 
-			'labels'       => [
+			'query_sorters' => self::get_query_sorters(),
+
+			'labels'        => [
 				'listings' => [
 					'title'        => esc_html__( 'Listings' ),
 					'description'  => esc_html__( 'Display listings.' ),
@@ -45,7 +47,8 @@ class Helper {
 					'panel_layout' => esc_html__( 'Results layout' ),
 					'featured'     => esc_html__( 'Show featured listings only' ),
 					'pagination'   => esc_html__( 'Show pagination' ),
-					'sorter'   => esc_html__( 'Show sorting dropdown' ),
+					'sorter'       => esc_html__( 'Show sorting dropdown' ),
+					'sort'         => esc_html__( 'Order listings by' ),
 				],
 			],
 
@@ -66,6 +69,27 @@ class Helper {
 				'render_callback' => [ Listings::class, 'render_callback' ],
 			]
 		);
+
+	}
+
+	/**
+	 * Prepare list of query sorting options available for the block.
+	 *
+	 * @return array
+	 */
+	private static function get_query_sorters() {
+
+		$sorters   = pno_get_listings_results_order_filters();
+		$formatted = [];
+
+		foreach ( $sorters as $key => $label ) {
+			$formatted[] = [
+				'value' => $key,
+				'label' => $label,
+			];
+		}
+
+		return $formatted;
 
 	}
 
