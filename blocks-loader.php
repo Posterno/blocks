@@ -11,34 +11,46 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-function wordpress_blocks_starter_block_categories( $categories, $post ) {
-	return array_merge(
-		$categories,
-		array(
+/**
+ * Register the Posterno blocks category for the Gutenberg editor.
+ */
+add_filter(
+	'block_categories',
+	function( $categories ) {
+
+		return array_merge(
+			$categories,
 			array(
-				'slug'  => 'posterno',
-				'title' => 'Posterno',
-			),
-		)
-	);
-}
-add_filter( 'block_categories', 'wordpress_blocks_starter_block_categories', 10, 2 );
+				array(
+					'slug'  => 'posterno',
+					'title' => 'Posterno',
+				),
+			)
+		);
 
-function wordpress_blocks_starter_enqueue_block_editor_assets() {
+	}
+);
 
-	wp_enqueue_script(
-		'posterno-blocks',
-		PNO_PLUGIN_URL . 'vendor/posterno/blocks/build/index.js',
-		[
-			'wp-blocks',
-			'wp-i18n',
-			'wp-element',
-			'wp-components',
-			'wp-editor',
-		],
-		PNO_VERSION,
-		true
-	);
+/**
+ * Register the script file containing all the blocks for the Gutenberg editor.
+ */
+add_action(
+	'enqueue_block_editor_assets',
+	function() {
 
-}
-add_action( 'enqueue_block_editor_assets', 'wordpress_blocks_starter_enqueue_block_editor_assets' );
+		wp_enqueue_script(
+			'posterno-blocks',
+			PNO_PLUGIN_URL . 'vendor/posterno/blocks/build/index.js',
+			[
+				'wp-blocks',
+				'wp-i18n',
+				'wp-element',
+				'wp-components',
+				'wp-editor',
+			],
+			PNO_VERSION,
+			true
+		);
+
+	}
+);
