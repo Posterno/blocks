@@ -10,6 +10,8 @@
 
 namespace PosternoBlocks;
 
+use PosternoBlocks\Blocks\Listings;
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -26,7 +28,27 @@ class Helper {
 	public static function get_js_vars() {
 		return [
 			'pno_svg_logo' => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+			'attributes'   => [
+				'listings' => Listings::get_attributes(),
+			],
 		];
+	}
+
+	/**
+	 * Register Gutenberg blocks that require server side rendering.
+	 *
+	 * @return void
+	 */
+	public static function register_server_side_blocks() {
+
+		register_block_type(
+			'posterno/listings',
+			[
+				'attributes'      => Listings::get_attributes(),
+				'render_callback' => [ Listings::class, 'render_callback' ],
+			]
+		);
+
 	}
 
 }

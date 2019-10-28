@@ -58,3 +58,13 @@ add_action(
 
 	}
 );
+
+/**
+ * Register server side blocks for the editor.
+ */
+add_action(
+	'init',
+	function() {
+		Helper::register_server_side_blocks();
+	}
+);
