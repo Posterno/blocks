@@ -1,0 +1,32 @@
+{
+	"name": "posterno/blocks",
+	"description": "Posterno component that registers custom Gutenberg blocks.",
+	"keywords": [
+		"wordpress"
+	],
+	"homepage": "https://posterno.com",
+	"authors": [{
+		"name": "Posterno",
+		"email": "hello@posterno.com"
+	}],
+	"require": {
+		"php": ">=5.6",
+		"composer/installers": "~1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"PosternoBlocks\\": "includes/classes/"
+		},
+		"files" : [
+			"blocks-loader.php"
+		]
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "0.4.4",
+		"pressmodo/phpcs-config": "dev-master"
+	},
+	"scripts": {
+		"lint": "phpcs .",
+		"lint-fix": "phpcbf ."
+	}
+}
