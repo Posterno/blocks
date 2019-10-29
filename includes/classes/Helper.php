@@ -82,10 +82,10 @@ class Helper {
 		$sorters   = pno_get_listings_results_order_filters();
 		$formatted = [];
 
-		foreach ( $sorters as $key => $label ) {
+		foreach ( $sorters as $key => $sorter ) {
 			$formatted[] = [
-				'value' => $key,
-				'label' => $label,
+				'value' => esc_html( $key ),
+				'label' => esc_html( $sorter[ 'label' ] ),
 			];
 		}
 

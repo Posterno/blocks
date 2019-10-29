@@ -2,6 +2,9 @@
  * Listings query block editor settings.
  */
 
+/**
+ * WordPress dependencies.
+ */
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
 
@@ -14,6 +17,11 @@ import {
 } from '@wordpress/components';
 
 import { InspectorControls } from '@wordpress/block-editor';
+
+/**
+ * Internal dependencies.
+ */
+import SortingOptions from '../utils/sortingOptions'
 
 // Build the editor settings.
 export default function (props) {
@@ -63,7 +71,7 @@ export default function (props) {
 					SelectControl, {
 						label: posterno_blocks.labels.listings.sort,
 						value: sort,
-						options: {},
+						options: SortingOptions,
 						onChange: (value) => props.setAttributes({
 							sort: value
 						}),
