@@ -22,6 +22,7 @@ import { InspectorControls } from '@wordpress/block-editor';
  * Internal dependencies.
  */
 import SortingOptions from '../utils/sortingOptions'
+import SearchUser from '../../components/search-user'
 
 // Build the editor settings.
 export default function (props) {
@@ -76,6 +77,9 @@ export default function (props) {
 							sort: value
 						}),
 					}
+				),
+				el(
+					SearchUser
 				)
 			),
 
