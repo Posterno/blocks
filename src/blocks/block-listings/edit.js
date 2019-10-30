@@ -40,9 +40,11 @@ export default function (props) {
 			sort,
 			sort_by,
 			user_id,
+			layout,
 		} = attributes;
 
 		const sortByOptions = posterno_blocks.query_sort_by
+		const layoutOptions = posterno_blocks.layout_options
 
 		const settings = el(
 			InspectorControls,
@@ -132,6 +134,16 @@ export default function (props) {
 								sorter: !sorter
 							});
 						},
+					}
+				),
+				el(
+					SelectControl, {
+						label: posterno_blocks.labels.listings.layout,
+						value: layout,
+						options: layoutOptions,
+						onChange: (value) => props.setAttributes({
+							layout: value
+						}),
 					}
 				),
 			),

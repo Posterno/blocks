@@ -52,6 +52,10 @@ class Listings {
 			'user_id'            => [
 				'type' => 'number',
 			],
+			'layout'             => [
+				'type'    => 'string',
+				'default' => 'list',
+			],
 		];
 	}
 

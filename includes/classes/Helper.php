@@ -27,12 +27,12 @@ class Helper {
 	 */
 	public static function get_js_vars() {
 		return [
-			'pno_svg_logo'  => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
-			'attributes'    => [
+			'pno_svg_logo'   => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+			'attributes'     => [
 				'listings' => Listings::get_attributes(),
 			],
-			'query_sorters' => self::get_query_sorters(),
-			'query_sort_by' => [
+			'query_sorters'  => self::get_query_sorters(),
+			'query_sort_by'  => [
 				[
 					'value' => 'ASC',
 					'label' => esc_html__( 'Ascending' ),
@@ -42,7 +42,8 @@ class Helper {
 					'label' => esc_html__( 'Descending' ),
 				],
 			],
-			'labels'        => [
+			'layout_options' => self::get_layout_options(),
+			'labels'         => [
 				'listings'                => [
 					'title'        => esc_html__( 'Listings' ),
 					'description'  => esc_html__( 'Display listings.' ),
@@ -57,6 +58,7 @@ class Helper {
 					'sorter'       => esc_html__( 'Show sorting dropdown' ),
 					'sort'         => esc_html__( 'Order listings by' ),
 					'sort_by'      => esc_html__( 'Sorting order' ),
+					'layout'       => esc_html__( 'Layout' ),
 				],
 				'search_user_label'       => esc_html__( 'Query listings by specific author' ),
 				'placeholder_search_user' => esc_html__( 'Search users' ),
@@ -99,6 +101,27 @@ class Helper {
 			$formatted[] = [
 				'value' => esc_html( $key ),
 				'label' => esc_html( $sorter['label'] ),
+			];
+		}
+
+		return $formatted;
+
+	}
+
+	/**
+	 * Get the layout options available.
+	 *
+	 * @return array
+	 */
+	private static function get_layout_options() {
+
+		$layouts = pno_get_listings_layout_available_options();
+		$formatted = [];
+
+		foreach ( $layouts as $key => $label ) {
+			$formatted[] = [
+				'value' => esc_html( $key ),
+				'label' => esc_html( $label ),
 			];
 		}
 
