@@ -7,6 +7,8 @@ import { debounce, escape } from 'lodash';
  * WordPress dependencies.
  */
 import { Component, Fragment } from '@wordpress/element';
+import { CheckboxControl } from '@wordpress/components';
+import { useState } from '@wordpress/element'
 
 /**
  * Search for users from the database.
@@ -18,6 +20,7 @@ class TaxonomyFilter extends Component {
 
 		this.state = {
 			selectedTaxonomies: [],
+			selectedTerms: [],
 			loading: false,
 			error: false,
 		};
@@ -26,9 +29,13 @@ class TaxonomyFilter extends Component {
 
 	render() {
 
+		const taxonomiesAvailable = posterno_blocks.registered_taxonomies;
+
     	return (
       		<Fragment>
-				Test
+
+				<p>{ posterno_blocks.labels.listings.taxonomy_select }</p>
+
       		</Fragment>
     	)
 	}
@@ -39,9 +46,8 @@ class TaxonomyFilter extends Component {
  * Setup default props for the component.
  */
 TaxonomyFilter.defaultProps = {
-	placeholder: '',
-	label: '',
-	help: '',
+	selectedTaxonomies: '',
+	selectedTerms: '',
 };
 
 export default TaxonomyFilter
