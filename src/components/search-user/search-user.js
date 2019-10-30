@@ -9,7 +9,7 @@ import { debounce, escape } from 'lodash';
 const { __ } = wp.i18n
 
 import { Component, Fragment } from '@wordpress/element';
-import { TextControl, Spinner, Notice } from '@wordpress/components'
+import { TextControl, Spinner, Notice, Button } from '@wordpress/components'
 import apiFetch from '@wordpress/api-fetch'
 
 /**
@@ -88,6 +88,10 @@ class SearchUser extends Component {
 					</Notice>
 				) }
 
+				{ this.props.existing_id > 0  && (
+					<Button isDefault isDestructive onClick={ () => this.props.onChange( { user_id: 0 } ) }>{ posterno_blocks.labels.search_user_selected } [{ this.props.existing_id }]</Button>
+				) }
+
 				{ this.state.results.length > 0 && Array.isArray( results ) && (
 					<div className="posterno-panel-results">
 						<ul>
@@ -119,7 +123,6 @@ SearchUser.defaultProps = {
 	placeholder: '',
 	label: '',
 	help: '',
-	user_id: ''
 };
 
 export default SearchUser

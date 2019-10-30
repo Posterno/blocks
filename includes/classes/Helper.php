@@ -54,8 +54,9 @@ class Helper {
 
 				'search_user_label'       => esc_html__( 'Query listings by specific author' ),
 				'placeholder_search_user' => esc_html__( 'Search users' ),
-				'search_user_help' => esc_html__( 'Leave blank if not needed.' ),
-				'search_user_error' => esc_html__( 'No users where found.' ),
+				'search_user_help'        => esc_html__( 'Leave blank if not needed.' ),
+				'search_user_error'       => esc_html__( 'No users where found.' ),
+				'search_user_selected'    => esc_html__( 'Remove selected author' ),
 			],
 
 		];
