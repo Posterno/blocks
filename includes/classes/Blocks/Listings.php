@@ -45,6 +45,9 @@ class Listings {
 				'type'    => 'string',
 				'default' => pno_get_option( 'listings_default_order', 'newest' ),
 			],
+			'user_id'            => [
+				'type' => 'number',
+			],
 		];
 	}
 

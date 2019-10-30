@@ -36,7 +36,8 @@ class Helper {
 			'query_sorters' => self::get_query_sorters(),
 
 			'labels'        => [
-				'listings' => [
+
+				'listings'                => [
 					'title'        => esc_html__( 'Listings' ),
 					'description'  => esc_html__( 'Display listings.' ),
 					'keywords'     => [
@@ -50,6 +51,11 @@ class Helper {
 					'sorter'       => esc_html__( 'Show sorting dropdown' ),
 					'sort'         => esc_html__( 'Order listings by' ),
 				],
+
+				'search_user_label'       => esc_html__( 'Query listings by specific author' ),
+				'placeholder_search_user' => esc_html__( 'Search users' ),
+				'search_user_help' => esc_html__( 'Leave blank if not needed.' ),
+				'search_user_error' => esc_html__( 'No users where found.' ),
 			],
 
 		];
@@ -85,7 +91,7 @@ class Helper {
 		foreach ( $sorters as $key => $sorter ) {
 			$formatted[] = [
 				'value' => esc_html( $key ),
-				'label' => esc_html( $sorter[ 'label' ] ),
+				'label' => esc_html( $sorter['label'] ),
 			];
 		}
 

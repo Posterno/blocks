@@ -22,7 +22,7 @@ import { InspectorControls } from '@wordpress/block-editor';
  * Internal dependencies.
  */
 import SortingOptions from '../utils/sortingOptions'
-import SearchUser from '../../components/search-user'
+import SearchUser from '../../components/search-user/search-user'
 
 // Build the editor settings.
 export default function (props) {
@@ -38,6 +38,7 @@ export default function (props) {
 			pagination,
 			sorter,
 			sort,
+			user_id,
 		} = attributes;
 
 		const settings = el(
@@ -79,7 +80,15 @@ export default function (props) {
 					}
 				),
 				el(
-					SearchUser
+					SearchUser, {
+						label: posterno_blocks.labels.search_user_label,
+						placeholder: posterno_blocks.labels.placeholder_search_user,
+						help: posterno_blocks.labels.search_user_help,
+						user_id: user_id,
+						onChange: (value) => props.setAttributes({
+							user_id: value.user_id
+						}),
+					}
 				)
 			),
 

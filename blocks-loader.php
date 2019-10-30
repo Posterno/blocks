@@ -54,6 +54,8 @@ add_action(
 			true
 		);
 
+		wp_enqueue_style( 'posterno-blocks-admin', PNO_PLUGIN_URL . 'vendor/posterno/blocks/build/style.css', [], PNO_VERSION );
+
 		wp_localize_script( 'posterno-blocks', 'posterno_blocks', Helper::get_js_vars() );
 
 	}
