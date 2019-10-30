@@ -27,12 +27,12 @@ class Helper {
 	 */
 	public static function get_js_vars() {
 		return [
-			'pno_svg_logo'   => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
-			'attributes'     => [
+			'pno_svg_logo'          => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+			'attributes'            => [
 				'listings' => Listings::get_attributes(),
 			],
-			'query_sorters'  => self::get_query_sorters(),
-			'query_sort_by'  => [
+			'query_sorters'         => self::get_query_sorters(),
+			'query_sort_by'         => [
 				[
 					'value' => 'ASC',
 					'label' => esc_html__( 'Ascending' ),
@@ -42,8 +42,9 @@ class Helper {
 					'label' => esc_html__( 'Descending' ),
 				],
 			],
-			'layout_options' => self::get_layout_options(),
-			'labels'         => [
+			'layout_options'        => self::get_layout_options(),
+			'registered_taxonomies' => self::get_registered_taxonomies(),
+			'labels'                => [
 				'listings'                => [
 					'title'        => esc_html__( 'Listings' ),
 					'description'  => esc_html__( 'Display listings.' ),
@@ -114,7 +115,7 @@ class Helper {
 	 */
 	private static function get_layout_options() {
 
-		$layouts = pno_get_listings_layout_available_options();
+		$layouts   = pno_get_listings_layout_available_options();
 		$formatted = [];
 
 		foreach ( $layouts as $key => $label ) {
@@ -126,6 +127,31 @@ class Helper {
 
 		return $formatted;
 
+	}
+
+	/**
+	 * Get the list of taxonomies registered for the listings post type.
+	 *
+	 * @return array
+	 */
+	private static function get_registered_taxonomies() {
+
+		$objects = get_object_taxonomies( 'listings', 'objects' );
+		$tax     = [];
+
+		foreach ( $objects as $key => $taxonomy ) {
+
+			if ( $key === 'listings-types' ) {
+				continue;
+			}
+
+			$tax[ $key ] = [
+				'label'        => esc_html( $taxonomy->label ),
+				'hierarchical' => esc_html( $taxonomy->hierarchical ),
+			];
+		}
+
+		return $tax;
 	}
 
 }
