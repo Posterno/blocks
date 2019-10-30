@@ -38,8 +38,11 @@ export default function (props) {
 			pagination,
 			sorter,
 			sort,
+			sort_by,
 			user_id,
 		} = attributes;
+
+		const sortByOptions = posterno_blocks.query_sort_by
 
 		const settings = el(
 			InspectorControls,
@@ -76,6 +79,16 @@ export default function (props) {
 						options: SortingOptions,
 						onChange: (value) => props.setAttributes({
 							sort: value
+						}),
+					}
+				),
+				el(
+					SelectControl, {
+						label: posterno_blocks.labels.listings.sort_by,
+						value: sort_by,
+						options: sortByOptions,
+						onChange: (value) => props.setAttributes({
+							sort_by: value
 						}),
 					}
 				),

@@ -28,15 +28,21 @@ class Helper {
 	public static function get_js_vars() {
 		return [
 			'pno_svg_logo'  => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
-
 			'attributes'    => [
 				'listings' => Listings::get_attributes(),
 			],
-
 			'query_sorters' => self::get_query_sorters(),
-
+			'query_sort_by' => [
+				[
+					'value' => 'ASC',
+					'label' => esc_html__( 'Ascending' ),
+				],
+				[
+					'value' => 'DESC',
+					'label' => esc_html__( 'Descending' ),
+				],
+			],
 			'labels'        => [
-
 				'listings'                => [
 					'title'        => esc_html__( 'Listings' ),
 					'description'  => esc_html__( 'Display listings.' ),
@@ -50,8 +56,8 @@ class Helper {
 					'pagination'   => esc_html__( 'Show pagination' ),
 					'sorter'       => esc_html__( 'Show sorting dropdown' ),
 					'sort'         => esc_html__( 'Order listings by' ),
+					'sort_by'      => esc_html__( 'Sorting order' ),
 				],
-
 				'search_user_label'       => esc_html__( 'Query listings by specific author' ),
 				'placeholder_search_user' => esc_html__( 'Search users' ),
 				'search_user_help'        => esc_html__( 'Leave blank if not needed.' ),
