@@ -31,11 +31,29 @@ class TaxonomyFilter extends Component {
 
 		const taxonomiesAvailable = posterno_blocks.registered_taxonomies;
 
+		const TaxonomyCheckboxControl = ( { checked, ...props } ) => {
+			const [ isChecked, setChecked ] = useState( checked );
+			return (
+				<CheckboxControl
+					{ ...props }
+					checked={ isChecked }
+					onChange= { (value) => {
+						console.log( value )
+					} }
+				/>
+			);
+		};
+
     	return (
       		<Fragment>
-
 				<p>{ posterno_blocks.labels.listings.taxonomy_select }</p>
-
+				{
+					Object.keys( taxonomiesAvailable ).map( taxonomy_id => (
+						<TaxonomyCheckboxControl
+							label={ taxonomiesAvailable[taxonomy_id].label }
+						/>
+					))
+				}
       		</Fragment>
     	)
 	}
