@@ -23,6 +23,7 @@ import { InspectorControls } from '@wordpress/block-editor';
  */
 import SortingOptions from '../utils/sortingOptions'
 import SearchUser from '../../components/search-user/search-user'
+import TaxonomyFilter from '../../components/taxonomy-filter'
 
 // Build the editor settings.
 export default function (props) {
@@ -152,6 +153,9 @@ export default function (props) {
 					title: posterno_blocks.labels.listings.panel_taxonomy,
 					initialOpen: false
 				},
+				el(
+					TaxonomyFilter
+				)
 			),
 
 		);
