@@ -34,10 +34,6 @@ class SearchUser extends Component {
 		this.debouncedOnSearch = debounce( this.onSearch.bind( this ), 400 );
 	}
 
-	componentDidMount() {
-		console.log( this.props )
-	}
-
 	onSearch( search ) {
 
 		if( search.length < 3 ) {
