@@ -147,6 +147,13 @@ export default function (props) {
 				),
 			),
 
+			el(
+				PanelBody, {
+					title: posterno_blocks.labels.listings.panel_taxonomy,
+					initialOpen: false
+				},
+			),
+
 		);
 
 		return [

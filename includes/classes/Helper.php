@@ -60,6 +60,7 @@ class Helper {
 					'sort'         => esc_html__( 'Order listings by' ),
 					'sort_by'      => esc_html__( 'Sorting order' ),
 					'layout'       => esc_html__( 'Layout' ),
+					'panel_taxonomy' => esc_html__( 'Filter by taxonomy terms' ),
 				],
 				'search_user_label'       => esc_html__( 'Query listings by specific author' ),
 				'placeholder_search_user' => esc_html__( 'Search users' ),
