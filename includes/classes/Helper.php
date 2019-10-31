@@ -146,11 +146,6 @@ class Helper {
 		$tax     = [];
 
 		foreach ( $objects as $key => $taxonomy ) {
-
-			if ( $key === 'listings-types' ) {
-				continue;
-			}
-
 			$tax[ $key ] = [
 				'label'        => esc_html( $taxonomy->label ),
 				'hierarchical' => esc_html( $taxonomy->hierarchical ),
@@ -173,7 +168,48 @@ class Helper {
 			wp_send_json_error();
 		}
 
-		wp_send_json_success();
+		$taxonomies = isset( $_GET['taxonomies'] ) && ! empty( $_GET['taxonomies'] ) ? pno_clean( $_GET['taxonomies'] ) : [];
+
+		if ( empty( $taxonomies ) ) {
+			wp_send_json_error();
+		}
+
+		$terms = [];
+
+		foreach ( $taxonomies as $taxonomy ) {
+			switch ( $taxonomy ) {
+				case 'listings-categories':
+					$terms[] = self::parse_taxonomy_terms( pno_get_listings_categories_for_association(), $taxonomy );
+					break;
+				case 'listings-types':
+					$terms[] = self::parse_taxonomy_terms( pno_get_listings_types_for_association(), $taxonomy );
+					break;
+				case 'listings-tags':
+					$terms[] = self::parse_taxonomy_terms( pno_get_listings_tags_for_association(), $taxonomy );
+					break;
+				case 'listings-locations':
+					$terms[] = self::parse_taxonomy_terms( pno_get_listings_locations_for_association(), $taxonomy );
+					break;
+			}
+		}
+
+		wp_send_json_success( $terms );
+
+	}
+
+	/**
+	 * Add a prefix to each term id so that it can later be identified into the block when making a query.
+	 *
+	 * @param array  $terms terms to prefix.
+	 * @param string $taxonomy the prefix being used.
+	 * @return array
+	 */
+	private static function parse_taxonomy_terms( $terms, $taxonomy ) {
+		foreach ( $terms as $key => $label ) {
+			$terms[ "{$taxonomy}/{$key}" ] = $label;
+			unset( $terms[ $key ] );
+		}
+		return $terms;
 
 	}
 
