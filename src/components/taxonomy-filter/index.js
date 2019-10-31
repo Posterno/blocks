@@ -12,6 +12,11 @@ import { CheckboxControl, Spinner } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 /**
+ * Internal dependencies.
+ */
+import SearchTerm from '../search-term'
+
+/**
  * Get taxonomy terms from the database.
  *
  * I'm no react expert but it seems to be working ¯\_(ツ)_/¯.
@@ -99,7 +104,6 @@ class TaxonomyFilter extends Component {
 
 		const TaxonomyCheckboxControl = ( { checked, ...props } ) => {
 			const [ isChecked, setChecked ] = useState( checked );
-
 			return (
 				<CheckboxControl
 					{ ...props }
@@ -115,7 +119,7 @@ class TaxonomyFilter extends Component {
 
     	return (
       		<Fragment>
-				<p>{ posterno_blocks.labels.listings.taxonomy_select }</p>
+				<div className="pno-taxonomies-checkboxes">
 				{
 					Object.keys( taxonomiesAvailable ).map( taxonomy_id => (
 						<TaxonomyCheckboxControl
@@ -124,12 +128,27 @@ class TaxonomyFilter extends Component {
 						/>
 					))
 				}
+				</div>
 
 				{ this.state.loading && (
 					<div class="spinner-wrapper">
         				<Spinner/>
 					</div>
 				) }
+
+				{
+					Object.keys( this.selectedTaxonomies ).map( taxonomy_index => (
+						<div className="pno-terms-selector">
+							<SearchTerm
+								label={ taxonomiesAvailable[ this.selectedTaxonomies[ taxonomy_index ] ].label }
+								terms={ this.state.availableTerms[ this.selectedTaxonomies[ taxonomy_index ] ] }
+								onChange = { (value) => {
+									console.log( value )
+								} }
+							/>
+						</div>
+					))
+				}
 
       		</Fragment>
     	)
