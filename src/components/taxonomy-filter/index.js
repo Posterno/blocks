@@ -26,6 +26,7 @@ class TaxonomyFilter extends Component {
 		};
 
 		this.selectedTaxonomies = []
+		this.availableTerms = []
 
 		this.debouncedOnTaxonomiesChange = debounce( this.onTaxonomiesChange.bind( this ), 400 );
 
