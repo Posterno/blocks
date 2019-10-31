@@ -9,7 +9,6 @@ import { xor, debounce, includes } from 'lodash';
 import { Component, Fragment } from '@wordpress/element';
 import { CheckboxControl, Spinner } from '@wordpress/components';
 import { useState } from '@wordpress/element'
-import apiFetch from '@wordpress/api-fetch'
 
 /**
  * Get taxonomy terms from the database.
@@ -43,19 +42,26 @@ class TaxonomyFilter extends Component {
 	}
 
 	/**
+	 * Get the list of terms available from the database.
+	 *
+	 * @param {array} taxonomies
+	 * @memberof TaxonomyFilter
+	 */
+	getTerms( taxonomies ) {
+
+		if ( taxonomies.length <=0 ) {
+			return
+		}
+
+	}
+
+	/**
 	 * When taxonomies are changed, reload the list of terms.
 	 *
 	 * @memberof TaxonomyFilter
 	 */
 	onTaxonomiesChange() {
-		this.setState( { loading: true } )
-
-		apiFetch( { path: '/wp/v2/users/?search=' + 'admin' } )
-		.then( users => {
-
-			this.setState( { loading: false } )
-
-		} );
+		this.getTerms( this.selectedTaxonomies )
 	}
 
 	render() {
