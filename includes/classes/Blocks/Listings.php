@@ -56,6 +56,9 @@ class Listings {
 				'type'    => 'string',
 				'default' => 'list',
 			],
+			'taxonomies'         => [
+				'type' => 'string',
+			],
 		];
 	}
 

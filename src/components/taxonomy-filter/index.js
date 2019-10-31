@@ -11,7 +11,6 @@ import { Component, Fragment } from '@wordpress/element';
 import { CheckboxControl, Spinner } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
-
 /**
  * Get taxonomy terms from the database.
  *
@@ -89,6 +88,7 @@ class TaxonomyFilter extends Component {
 	 * @memberof TaxonomyFilter
 	 */
 	onTaxonomiesChange() {
+		this.props.onTaxSelection( { taxonomies: this.selectedTaxonomies.join(',') } )
 		this.getTerms( this.selectedTaxonomies )
 	}
 
