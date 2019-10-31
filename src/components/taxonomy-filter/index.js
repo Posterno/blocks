@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { debounce, escape } from 'lodash';
+import { xor } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -38,7 +38,9 @@ class TaxonomyFilter extends Component {
 					{ ...props }
 					checked={ isChecked }
 					onChange= { (value) => {
-						console.log( value )
+						setChecked
+						let newTaxonomies = xor( this.state.selectedTaxonomies, [ props.taxonomy ] )
+						this.state.selectedTaxonomies = newTaxonomies
 					} }
 				/>
 			);
@@ -51,6 +53,7 @@ class TaxonomyFilter extends Component {
 					Object.keys( taxonomiesAvailable ).map( taxonomy_id => (
 						<TaxonomyCheckboxControl
 							label={ taxonomiesAvailable[taxonomy_id].label }
+							taxonomy={ taxonomy_id }
 						/>
 					))
 				}
@@ -64,8 +67,8 @@ class TaxonomyFilter extends Component {
  * Setup default props for the component.
  */
 TaxonomyFilter.defaultProps = {
-	selectedTaxonomies: '',
-	selectedTerms: '',
+	selectedTaxonomies: [],
+	selectedTerms: [],
 };
 
 export default TaxonomyFilter
