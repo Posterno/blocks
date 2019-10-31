@@ -23,10 +23,10 @@ class TaxonomyFilter extends Component {
 
 		this.state = {
 			loading: false,
+			availableTerms: []
 		};
 
 		this.selectedTaxonomies = []
-		this.availableTerms = []
 
 		this.debouncedOnTaxonomiesChange = debounce( this.onTaxonomiesChange.bind( this ), 400 );
 
@@ -70,7 +70,7 @@ class TaxonomyFilter extends Component {
 
 			console.log( response )
 
-			this.setState( { loading: false } )
+			this.setState( { loading: false, availableTerms: response.data.data } )
 
 		})
 		.catch( error => {
