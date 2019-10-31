@@ -179,21 +179,71 @@ class Helper {
 		foreach ( $taxonomies as $taxonomy ) {
 			switch ( $taxonomy ) {
 				case 'listings-categories':
-					$terms[ $taxonomy ] = pno_get_listings_categories_for_association();
+					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_categories_for_association(), $taxonomy );
 					break;
 				case 'listings-types':
-					$terms[ $taxonomy ] = pno_get_listings_types_for_association();
+					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_types_for_association(), $taxonomy );
 					break;
 				case 'listings-tags':
-					$terms[ $taxonomy ] = pno_get_listings_tags_for_association();
+					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_tags_for_association(), $taxonomy );
 					break;
 				case 'listings-locations':
-					$terms[ $taxonomy ] = pno_get_listings_locations_for_association();
+					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_locations_for_association(), $taxonomy );
+					break;
+				default:
+					$terms[ $taxonomy ] = self::parse_taxonomy_terms( self::get_external_taxonomy_terms( $taxonomy ), $taxonomy );
 					break;
 			}
 		}
 
 		wp_send_json_success( $terms );
+
+	}
+
+	/**
+	 * Add a prefix to each term id so that it can later be identified into the block when making a query.
+	 *
+	 * @param array  $terms terms to prefix.
+	 * @param string $taxonomy the prefix being used.
+	 * @return array
+	 */
+	private static function parse_taxonomy_terms( $terms, $taxonomy ) {
+		foreach ( $terms as $key => $label ) {
+			$terms[ "{$taxonomy}/{$key}" ] = $label;
+			unset( $terms[ $key ] );
+		}
+		return $terms;
+
+	}
+
+	/**
+	 * Get terms for the given taxonomy id.
+	 *
+	 * @param string $taxonomy taxonomy id.
+	 * @return array
+	 */
+	private static function get_external_taxonomy_terms( $taxonomy ) {
+
+		$categories = [];
+
+		$terms = get_terms(
+			$taxonomy,
+			array(
+				'hide_empty' => false,
+				'number'     => 999,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+				'parent'     => 0,
+			)
+		);
+
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $listing_cat ) {
+				$categories[ absint( $listing_cat->term_id ) ] = esc_html( $listing_cat->name );
+			}
+		}
+
+		return $categories;
 
 	}
 
