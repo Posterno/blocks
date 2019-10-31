@@ -2,13 +2,15 @@
  * External dependencies.
  */
 import { xor, debounce, includes } from 'lodash';
+import axios from 'axios';
 
 /**
  * WordPress dependencies.
  */
 import { Component, Fragment } from '@wordpress/element';
 import { CheckboxControl, Spinner } from '@wordpress/components';
-import { useState } from '@wordpress/element'
+import { useState } from '@wordpress/element';
+
 
 /**
  * Get taxonomy terms from the database.
@@ -52,6 +54,32 @@ class TaxonomyFilter extends Component {
 		if ( taxonomies.length <=0 ) {
 			return
 		}
+
+		this.setState( { loading: true } )
+
+		const configParams = {
+			nonce: posterno_blocks.nonces.get_terms,
+			action: 'pno_get_taxonomies_terms_for_block',
+			taxonomies: taxonomies,
+		}
+
+		axios.get( posterno_blocks.ajax, {
+			params: configParams
+		})
+		.then( response => {
+
+			console.log( response )
+
+			this.setState( { loading: false } )
+
+		})
+		.catch( error => {
+
+			this.setState( { loading: false } )
+
+			throw error
+
+		})
 
 	}
 

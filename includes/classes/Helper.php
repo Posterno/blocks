@@ -28,6 +28,7 @@ class Helper {
 	public static function get_js_vars() {
 		return [
 			'pno_svg_logo'          => PNO_PLUGIN_URL . 'assets/imgs/logo.svg',
+			'ajax'                  => admin_url( 'admin-ajax.php' ),
 			'attributes'            => [
 				'listings' => Listings::get_attributes(),
 			],
@@ -67,6 +68,9 @@ class Helper {
 				'placeholder_search_user' => esc_html__( 'Search users', 'posterno' ),
 				'search_user_error'       => esc_html__( 'No users where found.', 'posterno' ),
 				'search_user_selected'    => esc_html__( 'Remove selected author', 'posterno' ),
+			],
+			'nonces'                => [
+				'get_terms' => wp_create_nonce( 'pno_get_taxonomies_terms_from_block' ),
 			],
 
 		];
@@ -154,6 +158,23 @@ class Helper {
 		}
 
 		return $tax;
+	}
+
+	/**
+	 * Get taxonomy terms for the selected taxonomies.
+	 *
+	 * @return void
+	 */
+	public static function get_taxonomies_terms() {
+
+		check_ajax_referer( 'pno_get_taxonomies_terms_from_block', 'nonce' );
+
+		if ( ! current_user_can( 'publish_posts' ) ) {
+			wp_send_json_error();
+		}
+
+		wp_send_json_success();
+
 	}
 
 }

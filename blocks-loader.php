@@ -70,3 +70,8 @@ add_action(
 		Helper::register_server_side_blocks();
 	}
 );
+
+/**
+ * Register the ajax functionality to retrieve taxonomy terms for blocks.
+ */
+add_action( 'wp_ajax_pno_get_taxonomies_terms_for_block', [ Helper::class, 'get_taxonomies_terms' ] );
