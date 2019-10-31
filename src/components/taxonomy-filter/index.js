@@ -1,17 +1,20 @@
 /**
  * External dependencies.
  */
-import { xor } from 'lodash';
+import { xor, debounce, includes } from 'lodash';
 
 /**
  * WordPress dependencies.
  */
 import { Component, Fragment } from '@wordpress/element';
-import { CheckboxControl } from '@wordpress/components';
+import { CheckboxControl, Spinner } from '@wordpress/components';
 import { useState } from '@wordpress/element'
+import apiFetch from '@wordpress/api-fetch'
 
 /**
- * Search for users from the database.
+ * Get taxonomy terms from the database.
+ *
+ * I'm no react expert but it seems to be working ¯\_(ツ)_/¯.
  */
 class TaxonomyFilter extends Component {
 
@@ -19,12 +22,40 @@ class TaxonomyFilter extends Component {
 		super( ...arguments );
 
 		this.state = {
-			selectedTaxonomies: [],
-			selectedTerms: [],
 			loading: false,
-			error: false,
 		};
 
+		this.selectedTaxonomies = []
+
+		this.debouncedOnTaxonomiesChange = debounce( this.onTaxonomiesChange.bind( this ), 400 );
+
+	}
+
+	/**
+	 * Add or remove a taxonomy from the list of selected ones.
+	 *
+	 * @param {string} taxonomy
+	 * @memberof TaxonomyFilter
+	 */
+	toggleTaxonomy( taxonomy ) {
+		this.selectedTaxonomies = xor( this.selectedTaxonomies, [ taxonomy ] )
+		this.debouncedOnTaxonomiesChange()
+	}
+
+	/**
+	 * When taxonomies are changed, reload the list of terms.
+	 *
+	 * @memberof TaxonomyFilter
+	 */
+	onTaxonomiesChange() {
+		this.setState( { loading: true } )
+
+		apiFetch( { path: '/wp/v2/users/?search=' + 'admin' } )
+		.then( users => {
+
+			this.setState( { loading: false } )
+
+		} );
 	}
 
 	render() {
@@ -33,14 +64,15 @@ class TaxonomyFilter extends Component {
 
 		const TaxonomyCheckboxControl = ( { checked, ...props } ) => {
 			const [ isChecked, setChecked ] = useState( checked );
+
 			return (
 				<CheckboxControl
 					{ ...props }
-					checked={ isChecked }
-					onChange= { (value) => {
+					disabled = { this.state.loading === true }
+					checked = { isChecked || includes( this.selectedTaxonomies, props.taxonomy ) === true }
+					onChange = { (value) => {
 						setChecked
-						let newTaxonomies = xor( this.state.selectedTaxonomies, [ props.taxonomy ] )
-						this.state.selectedTaxonomies = newTaxonomies
+						this.toggleTaxonomy( props.taxonomy )
 					} }
 				/>
 			);
@@ -57,6 +89,13 @@ class TaxonomyFilter extends Component {
 						/>
 					))
 				}
+
+				{ this.state.loading && (
+					<div class="spinner-wrapper">
+        				<Spinner/>
+					</div>
+				) }
+
       		</Fragment>
     	)
 	}
