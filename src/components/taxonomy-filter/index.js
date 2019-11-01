@@ -45,8 +45,10 @@ class TaxonomyFilter extends Component {
 	componentDidMount() {
 		if ( this.props.selectedTaxonomies ) {
 			const tax = this.props.selectedTaxonomies.split( ',' )
-			this.selectedTaxonomies = tax
-			this.getTerms( tax, true )
+			if ( tax.length > 0 ) {
+				this.selectedTaxonomies = tax
+				this.getTerms( tax, true )
+			}
 		}
 	}
 
