@@ -17,6 +17,8 @@ class SearchTerm extends Component {
 
 	constructor() {
 		super( ...arguments );
+
+		this.termsList = []
 	}
 
 	/**
@@ -40,8 +42,14 @@ class SearchTerm extends Component {
 
 	render() {
 
+		let tokensList = this.props.tokens
+
+		if ( this.termsList.length > 0 ) {
+			tokensList = this.termsList
+		}
+
 		const MyFormTokenField = withState( {
-			tokens: this.props.tokens,
+			tokens: tokensList,
 			suggestions: this.props.terms,
 		} )( ( { tokens, suggestions, setState } ) => (
 
@@ -51,6 +59,7 @@ class SearchTerm extends Component {
 				suggestions={ suggestions }
 				onChange = { tokens => {
 					setState( { tokens } )
+					this.termsList = tokens
 					this.props.onChange( { terms: this.parseTokensNamesToObject( tokens ) } )
 				} }
 			/>
