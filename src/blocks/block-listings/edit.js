@@ -43,6 +43,7 @@ export default function (props) {
 			user_id,
 			layout,
 			taxonomies,
+			terms,
 		} = attributes;
 
 		const sortByOptions = posterno_blocks.query_sort_by
@@ -159,6 +160,17 @@ export default function (props) {
 						onTaxSelection: (value) => props.setAttributes({
 							taxonomies: value.taxonomies
 						}),
+						onTermsSelection: ( value ) => {
+							if ( value.value.terms.length > 0 ) {
+								setAttributes({
+									terms: value.value.terms.join(',')
+								})
+							} else {
+								setAttributes({
+									terms: ''
+								})
+							}
+						},
 					}
 				)
 			),

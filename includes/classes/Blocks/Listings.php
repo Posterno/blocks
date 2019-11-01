@@ -59,6 +59,9 @@ class Listings {
 			'taxonomies'         => [
 				'type' => 'string',
 			],
+			'terms'              => [
+				'type' => 'string',
+			],
 		];
 	}
 

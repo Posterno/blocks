@@ -73,8 +73,6 @@ class TaxonomyFilter extends Component {
 		})
 		.then( response => {
 
-			console.log( response )
-
 			this.setState( { loading: false, availableTerms: response.data.data } )
 
 		})
@@ -143,7 +141,7 @@ class TaxonomyFilter extends Component {
 								label={ taxonomiesAvailable[ this.selectedTaxonomies[ taxonomy_index ] ].label }
 								terms={ this.state.availableTerms[ this.selectedTaxonomies[ taxonomy_index ] ] }
 								onChange = { (value) => {
-									console.log( value )
+									this.props.onTermsSelection( { value } )
 								} }
 							/>
 						</div>
