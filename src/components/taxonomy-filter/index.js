@@ -15,6 +15,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import SearchTerm from '../search-term'
+import { throwStatement } from '@babel/types';
 
 /**
  * Get taxonomy terms from the database.
@@ -38,6 +39,19 @@ class TaxonomyFilter extends Component {
 	}
 
 	/**
+	 * If taxonomies have been sent through a prop, persist them, then load terms list via ajax.
+	 *
+	 * @memberof TaxonomyFilter
+	 */
+	componentDidMount() {
+		if ( this.props.selectedTaxonomies ) {
+			const tax = this.props.selectedTaxonomies.split( ',' )
+			this.selectedTaxonomies = tax
+			this.getTerms( tax, true )
+		}
+	}
+
+	/**
 	 * Add or remove a taxonomy from the list of selected ones.
 	 *
 	 * @param {string} taxonomy
@@ -54,7 +68,7 @@ class TaxonomyFilter extends Component {
 	 * @param {array} taxonomies
 	 * @memberof TaxonomyFilter
 	 */
-	getTerms( taxonomies ) {
+	getTerms( taxonomies, forceUpdate = false ) {
 
 		if ( taxonomies.length <=0 ) {
 			return
@@ -74,6 +88,10 @@ class TaxonomyFilter extends Component {
 		.then( response => {
 
 			this.setState( { loading: false, availableTerms: response.data.data } )
+
+			if ( forceUpdate === true ) {
+				this.forceUpdate()
+			}
 
 		})
 		.catch( error => {
