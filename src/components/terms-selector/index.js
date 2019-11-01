@@ -47,6 +47,7 @@ class TermsSelector extends Component {
 					Object.keys( this.props.taxonomies ).map( taxonomy_index => (
 
 						<FormTokenField
+							disabled={ this.props.disabled }
 							label={ taxonomiesAvailable[ this.props.taxonomies[ taxonomy_index ] ].label }
 							suggestions={ this.props.terms[ this.props.taxonomies[ taxonomy_index ] ] }
 							value={ this.termsSelected[ this.props.taxonomies[ taxonomy_index ] ] && this.termsSelected[ this.props.taxonomies[ taxonomy_index ] ].length > 0 ? this.termsSelected[ this.props.taxonomies[ taxonomy_index ] ] : [] }
@@ -68,6 +69,8 @@ class TermsSelector extends Component {
 /**
  * Setup default props for the component.
  */
-TermsSelector.defaultProps = {};
+TermsSelector.defaultProps = {
+	disabled: false
+};
 
 export default TermsSelector

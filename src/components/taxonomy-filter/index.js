@@ -154,6 +154,7 @@ class TaxonomyFilter extends Component {
 					terms={ this.state.availableTerms }
 					taxonomies={ this.selectedTaxonomies }
 					selectedTerms={ this.selectedTerms }
+					disabled={ this.state.loading }
 					onChange = { (value) => {
 						this.props.onTermsSelection( { terms: value } )
 					} }
