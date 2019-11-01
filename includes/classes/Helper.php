@@ -179,40 +179,24 @@ class Helper {
 		foreach ( $taxonomies as $taxonomy ) {
 			switch ( $taxonomy ) {
 				case 'listings-categories':
-					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_categories_for_association(), $taxonomy );
+					$terms[ $taxonomy ] = pno_get_listings_categories_for_association();
 					break;
 				case 'listings-types':
-					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_types_for_association(), $taxonomy );
+					$terms[ $taxonomy ] = pno_get_listings_types_for_association();
 					break;
 				case 'listings-tags':
-					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_tags_for_association(), $taxonomy );
+					$terms[ $taxonomy ] = pno_get_listings_tags_for_association();
 					break;
 				case 'listings-locations':
-					$terms[ $taxonomy ] = self::parse_taxonomy_terms( pno_get_listings_locations_for_association(), $taxonomy );
+					$terms[ $taxonomy ] = pno_get_listings_locations_for_association();
 					break;
 				default:
-					$terms[ $taxonomy ] = self::parse_taxonomy_terms( self::get_external_taxonomy_terms( $taxonomy ), $taxonomy );
+					$terms[ $taxonomy ] = self::get_external_taxonomy_terms( $taxonomy );
 					break;
 			}
 		}
 
 		wp_send_json_success( $terms );
-
-	}
-
-	/**
-	 * Add a prefix to each term id so that it can later be identified into the block when making a query.
-	 *
-	 * @param array  $terms terms to prefix.
-	 * @param string $taxonomy the prefix being used.
-	 * @return array
-	 */
-	private static function parse_taxonomy_terms( $terms, $taxonomy ) {
-		foreach ( $terms as $key => $label ) {
-			$terms[ "{$taxonomy}/{$key}" ] = $label;
-			unset( $terms[ $key ] );
-		}
-		return $terms;
 
 	}
 
