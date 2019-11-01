@@ -14,7 +14,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import SearchTerm from '../search-term'
+import TermsSelector from '../terms-selector'
 
 /**
  * Get taxonomy terms from the database.
@@ -90,18 +90,10 @@ class TaxonomyFilter extends Component {
 
 			this.setState( { loading: false, availableTerms: response.data.data } )
 
-			if ( forceUpdate === true ) {
-				this.forceUpdate()
-			}
-
 		})
 		.catch( error => {
 
 			this.setState( { loading: false } )
-
-			if ( forceUpdate === true ) {
-				this.forceUpdate()
-			}
 
 			throw error
 
@@ -157,19 +149,13 @@ class TaxonomyFilter extends Component {
 					</div>
 				) }
 
-				{
-					Object.keys( this.selectedTaxonomies ).map( taxonomy_index => (
-						<div className="pno-terms-selector">
-							<SearchTerm
-								label={ taxonomiesAvailable[ this.selectedTaxonomies[ taxonomy_index ] ].label }
-								terms={ this.state.availableTerms[ this.selectedTaxonomies[ taxonomy_index ] ] }
-								onChange = { (value) => {
-									this.props.onTermsSelection( { value } )
-								} }
-							/>
-						</div>
-					))
-				}
+				<TermsSelector
+					terms={ this.state.availableTerms }
+					taxonomies={ this.selectedTaxonomies }
+					onChange = { (value) => {
+						this.props.onTermsSelection( { terms: value } )
+					} }
+				/>
 
       		</Fragment>
     	)

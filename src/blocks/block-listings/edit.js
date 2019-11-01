@@ -162,15 +162,9 @@ export default function (props) {
 							taxonomies: value.taxonomies
 						}),
 						onTermsSelection: ( value ) => {
-							if ( value.value.terms.length > 0 ) {
-								setAttributes({
-									terms: value.value.terms.join(',')
-								})
-							} else {
-								setAttributes({
-									terms: ''
-								})
-							}
+							setAttributes({
+								terms: JSON.stringify( value.terms.terms )
+							});
 						},
 					}
 				)
