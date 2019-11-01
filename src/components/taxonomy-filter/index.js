@@ -15,7 +15,6 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import SearchTerm from '../search-term'
-import { throwStatement } from '@babel/types';
 
 /**
  * Get taxonomy terms from the database.
