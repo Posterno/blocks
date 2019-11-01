@@ -97,6 +97,10 @@ class TaxonomyFilter extends Component {
 
 			this.setState( { loading: false } )
 
+			if ( forceUpdate === true ) {
+				this.forceUpdate()
+			}
+
 			throw error
 
 		})
