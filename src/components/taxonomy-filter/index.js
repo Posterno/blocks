@@ -31,6 +31,7 @@ class TaxonomyFilter extends Component {
 			availableTerms: []
 		};
 
+		this.selectedTerms = ''
 		this.selectedTaxonomies = []
 
 		this.debouncedOnTaxonomiesChange = debounce( this.onTaxonomiesChange.bind( this ), 400 );
@@ -43,6 +44,11 @@ class TaxonomyFilter extends Component {
 	 * @memberof TaxonomyFilter
 	 */
 	componentDidMount() {
+
+		if ( this.props.selectedTerms ) {
+			this.selectedTerms = this.props.selectedTerms
+		}
+
 		if ( this.props.selectedTaxonomies ) {
 			const tax = this.props.selectedTaxonomies.split( ',' )
 			if ( tax.length > 0 ) {
@@ -69,7 +75,7 @@ class TaxonomyFilter extends Component {
 	 * @param {array} taxonomies
 	 * @memberof TaxonomyFilter
 	 */
-	getTerms( taxonomies, forceUpdate = false ) {
+	getTerms( taxonomies ) {
 
 		if ( taxonomies.length <=0 ) {
 			return
@@ -87,16 +93,11 @@ class TaxonomyFilter extends Component {
 			params: configParams
 		})
 		.then( response => {
-
 			this.setState( { loading: false, availableTerms: response.data.data } )
-
 		})
 		.catch( error => {
-
 			this.setState( { loading: false } )
-
 			throw error
-
 		})
 
 	}
@@ -152,6 +153,7 @@ class TaxonomyFilter extends Component {
 				<TermsSelector
 					terms={ this.state.availableTerms }
 					taxonomies={ this.selectedTaxonomies }
+					selectedTerms={ this.selectedTerms }
 					onChange = { (value) => {
 						this.props.onTermsSelection( { terms: value } )
 					} }

@@ -24,7 +24,9 @@ class TermsSelector extends Component {
 
 	componentWillReceiveProps( props ) {
 		if ( props.terms !== this.props.terms ) {
-			console.log( props )
+			if ( props.selectedTerms ) {
+				this.termsSelected = JSON.parse( props.selectedTerms )
+			}
 		}
 	}
 

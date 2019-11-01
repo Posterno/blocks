@@ -158,6 +158,7 @@ export default function (props) {
 				el(
 					TaxonomyFilter, {
 						selectedTaxonomies: taxonomies,
+						selectedTerms: terms,
 						onTaxSelection: (value) => props.setAttributes({
 							taxonomies: value.taxonomies
 						}),
