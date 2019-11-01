@@ -13,11 +13,6 @@ import { TextControl, Spinner, Notice, Button } from '@wordpress/components'
 import apiFetch from '@wordpress/api-fetch'
 
 /**
- * Internal dependencies.
- */
-import './style.scss'
-
-/**
  * Search for users from the database.
  */
 class SearchUser extends Component {
