@@ -109,6 +109,27 @@ export default function (props) {
 				)
 			),
 
+			el(
+				PanelBody, {
+					title: posterno_blocks.labels.listings.panel_taxonomy,
+					initialOpen: false
+				},
+				el(
+					TaxonomyFilter, {
+						selectedTaxonomies: taxonomies,
+						selectedTerms: terms,
+						onTaxSelection: (value) => props.setAttributes({
+							taxonomies: value.taxonomies
+						}),
+						onTermsSelection: ( value ) => {
+							setAttributes({
+								terms: JSON.stringify( value.terms.terms )
+							});
+						},
+					}
+				)
+			),
+
 			// Layout settings panel.
 			el(
 				PanelBody, {
@@ -148,27 +169,6 @@ export default function (props) {
 						}),
 					}
 				),
-			),
-
-			el(
-				PanelBody, {
-					title: posterno_blocks.labels.listings.panel_taxonomy,
-					initialOpen: false
-				},
-				el(
-					TaxonomyFilter, {
-						selectedTaxonomies: taxonomies,
-						selectedTerms: terms,
-						onTaxSelection: (value) => props.setAttributes({
-							taxonomies: value.taxonomies
-						}),
-						onTermsSelection: ( value ) => {
-							setAttributes({
-								terms: JSON.stringify( value.terms.terms )
-							});
-						},
-					}
-				)
 			),
 
 		);
