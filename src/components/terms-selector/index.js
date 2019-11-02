@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { findKey } from 'lodash';
+import { findKey, each } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -32,24 +32,32 @@ class TermsSelector extends Component {
 	 * Because tokens use the names of each term, we need to parse them back to the list of ids
 	 * so that we can use it later into the WP_Query into the block.
 	 */
-	parseTokensNamesToObject( tokens, taxonomy ) {
+	parseNamesToIDs( tokens ) {
 
-		let list = []
+		let list = {}
 
-		Object.keys(tokens).forEach( ( item ) => {
-			var key = findKey( this.props.terms[ taxonomy ], ( v ) => {
-				return v === tokens[item];
+		each( tokens, ( selectedTermsList, taxonomyName ) => {
+
+			let TermIDs = []
+
+			selectedTermsList.forEach( ( termName ) => {
+				TermIDs.push( findKey( this.props.terms[ taxonomyName ], ( item ) => ( item.indexOf( termName ) !== -1 ) ) )
 			});
-			list.push( key )
-		});
+
+			list[ taxonomyName ] = TermIDs
+
+		} );
 
 		return list
 
 	}
 
 	updateSelectedTerms( tokens, taxonomy ) {
-		this.termsSelected[ taxonomy ] = this.parseTokensNamesToObject( tokens, taxonomy )
-		this.props.onChange( { terms: this.termsSelected } )
+
+		this.termsSelected[ taxonomy ] = tokens
+
+		this.props.onChange( { terms: this.parseNamesToIDs( this.termsSelected ) } )
+
 	}
 
 	render() {
