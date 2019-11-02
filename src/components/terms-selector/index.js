@@ -23,9 +23,36 @@ class TermsSelector extends Component {
 	componentWillReceiveProps( props ) {
 		if ( props.terms !== this.props.terms ) {
 			if ( props.selectedTerms ) {
-				this.termsSelected = JSON.parse( props.selectedTerms )
+				this.termsSelected = this.parseIdsToNames( JSON.parse( props.selectedTerms ), props.terms )
 			}
 		}
+	}
+
+	/**
+	 * When receiving selected terms back from the block, we need to convert the IDs to names
+	 * so that they can be displayed within the token's selector field.
+	 *
+	 * @param {*} tokens
+	 * @memberof TermsSelector
+	 */
+	parseIdsToNames( tokens, availableTerms ) {
+
+		let list = {}
+
+		each( tokens, ( selectedTermsList, taxonomyName ) => {
+			if ( availableTerms[ taxonomyName ] ) {
+				let TermNames = []
+
+				selectedTermsList.forEach( ( termID ) => {
+					TermNames.push( availableTerms[ taxonomyName ][ termID ] )
+				});
+
+				list[ taxonomyName ] = TermNames
+			}
+		} );
+
+		return list
+
 	}
 
 	/**
