@@ -1,16 +1,14 @@
 /**
  * External dependencies.
  */
-import { debounce, escape } from 'lodash';
+import { findKey } from 'lodash';
 
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n
 
 import { Component, Fragment } from '@wordpress/element';
 import { FormTokenField } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
 
 /**
  * Search for users from the database.
@@ -30,8 +28,27 @@ class TermsSelector extends Component {
 		}
 	}
 
+	/**
+	 * Because tokens use the names of each term, we need to parse them back to the list of ids
+	 * so that we can use it later into the WP_Query into the block.
+	 */
+	parseTokensNamesToObject( tokens, taxonomy ) {
+
+		let list = []
+
+		Object.keys(tokens).forEach( ( item ) => {
+			var key = findKey( this.props.terms[ taxonomy ], ( v ) => {
+				return v === tokens[item];
+			});
+			list.push( key )
+		});
+
+		return list
+
+	}
+
 	updateSelectedTerms( tokens, taxonomy ) {
-		this.termsSelected[ taxonomy ] = tokens
+		this.termsSelected[ taxonomy ] = this.parseTokensNamesToObject( tokens, taxonomy )
 		this.props.onChange( { terms: this.termsSelected } )
 	}
 
@@ -45,7 +62,6 @@ class TermsSelector extends Component {
 				<div className="pno-terms-selector">
 				{
 					Object.keys( this.props.taxonomies ).map( taxonomy_index => (
-
 						<FormTokenField
 							disabled={ this.props.disabled }
 							label={ taxonomiesAvailable[ this.props.taxonomies[ taxonomy_index ] ].label }
@@ -55,7 +71,6 @@ class TermsSelector extends Component {
 								this.updateSelectedTerms( tokens, this.props.taxonomies[ taxonomy_index ] )
 							} }
 						/>
-
 					))
 				}
 				</div>
