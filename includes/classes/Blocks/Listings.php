@@ -75,7 +75,9 @@ class Listings {
 
 		ob_start();
 
-		print_r( $attributes );
+		posterno()->templates
+			->set_template_data( $attributes )
+			->get_template_part( 'blocks/block', 'listings' );
 
 		return ob_get_clean();
 
