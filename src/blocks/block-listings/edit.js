@@ -37,9 +37,7 @@ export default function (props) {
 			number,
 			show_featured_only,
 			pagination,
-			sorter,
 			sort,
-			sort_by,
 			user_id,
 			layout,
 			taxonomies,
@@ -87,16 +85,7 @@ export default function (props) {
 						}),
 					}
 				),
-				el(
-					SelectControl, {
-						label: posterno_blocks.labels.listings.sort_by,
-						value: sort_by,
-						options: sortByOptions,
-						onChange: (value) => props.setAttributes({
-							sort_by: value
-						}),
-					}
-				),
+
 				el(
 					SearchUser, {
 						label: posterno_blocks.labels.search_user_label,
@@ -144,17 +133,6 @@ export default function (props) {
 						onChange: function () {
 							setAttributes({
 								pagination: !pagination
-							});
-						},
-					}
-				),
-				el(
-					ToggleControl, {
-						label: posterno_blocks.labels.listings.sorter,
-						checked: sorter,
-						onChange: function () {
-							setAttributes({
-								sorter: !sorter
 							});
 						},
 					}
