@@ -8,7 +8,7 @@ import axios from 'axios';
  * WordPress dependencies.
  */
 import { Component, Fragment } from '@wordpress/element';
-import { CheckboxControl, Spinner } from '@wordpress/components';
+import { CheckboxControl, Spinner, Notice } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 /**
@@ -28,7 +28,8 @@ class TaxonomyFilter extends Component {
 
 		this.state = {
 			loading: false,
-			availableTerms: []
+			availableTerms: [],
+			error: false,
 		};
 
 		this.selectedTerms = ''
@@ -81,7 +82,7 @@ class TaxonomyFilter extends Component {
 			return
 		}
 
-		this.setState( { loading: true } )
+		this.setState( { loading: true, error: false } )
 
 		const configParams = {
 			nonce: posterno_blocks.nonces.get_terms,
@@ -96,7 +97,7 @@ class TaxonomyFilter extends Component {
 			this.setState( { loading: false, availableTerms: response.data.data } )
 		})
 		.catch( error => {
-			this.setState( { loading: false } )
+			this.setState( { loading: false, error: true } )
 			throw error
 		})
 
@@ -148,6 +149,12 @@ class TaxonomyFilter extends Component {
 					<div class="spinner-wrapper">
         				<Spinner/>
 					</div>
+				) }
+
+				{ this.state.error && (
+					<Notice status="warning" isDismissible={ false }>
+						{ posterno_blocks.labels.nonce_error }
+					</Notice>
 				) }
 
 				<TermsSelector

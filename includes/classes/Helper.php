@@ -68,6 +68,7 @@ class Helper {
 				'placeholder_search_user' => esc_html__( 'Search users', 'posterno' ),
 				'search_user_error'       => esc_html__( 'No users where found.', 'posterno' ),
 				'search_user_selected'    => esc_html__( 'Remove selected author', 'posterno' ),
+				'nonce_error' => esc_html__( 'Something went wrong. Please reload this page and try again.' ),
 			],
 			'nonces'                => [
 				'get_terms' => wp_create_nonce( 'pno_get_taxonomies_terms_from_block' ),
