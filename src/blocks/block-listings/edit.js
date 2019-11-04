@@ -37,7 +37,6 @@ export default function (props) {
 			number,
 			show_featured_only,
 			pagination,
-			sort,
 			user_id,
 			layout,
 			taxonomies,
@@ -74,17 +73,6 @@ export default function (props) {
 						},
 					}
 				),
-				el(
-					SelectControl, {
-						label: posterno_blocks.labels.listings.sort,
-						value: sort,
-						options: SortingOptions,
-						onChange: (value) => props.setAttributes({
-							sort: value
-						}),
-					}
-				),
-
 				el(
 					SearchUser, {
 						label: posterno_blocks.labels.search_user_label,
