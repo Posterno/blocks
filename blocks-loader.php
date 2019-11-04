@@ -68,7 +68,9 @@ add_action(
 add_action(
 	'init',
 	function() {
-		Helper::register_server_side_blocks();
+		if ( function_exists( 'register_block_type' ) ) {
+			Helper::register_server_side_blocks();
+		}
 	}
 );
 
