@@ -44,7 +44,6 @@ export default function (props) {
 			terms,
 		} = attributes;
 
-		const sortByOptions = posterno_blocks.query_sort_by
 		const layoutOptions = posterno_blocks.layout_options
 
 		const settings = el(
