@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { findKey, each } from 'lodash';
+import { findKey, each, isArray } from 'lodash';
 
 /**
  * WordPress dependencies.
@@ -22,7 +22,7 @@ class TermsSelector extends Component {
 
 	componentWillReceiveProps( props ) {
 		if ( props.terms !== this.props.terms ) {
-			if ( props.selectedTerms ) {
+			if ( props.selectedTerms && ! isArray( props.selectedTerms ) ) {
 				this.termsSelected = this.parseIdsToNames( JSON.parse( props.selectedTerms ), props.terms )
 			}
 		}

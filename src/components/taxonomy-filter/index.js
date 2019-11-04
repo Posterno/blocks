@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { xor, debounce, includes } from 'lodash';
+import { xor, debounce, includes, isArray } from 'lodash';
 import axios from 'axios';
 
 /**
@@ -50,7 +50,7 @@ class TaxonomyFilter extends Component {
 			this.selectedTerms = this.props.selectedTerms
 		}
 
-		if ( this.props.selectedTaxonomies ) {
+		if ( ! isArray( this.props.selectedTaxonomies ) ) {
 			const tax = this.props.selectedTaxonomies.split( ',' )
 			if ( tax.length > 0 ) {
 				this.selectedTaxonomies = tax
