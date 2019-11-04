@@ -54,6 +54,9 @@ class Listings {
 			'terms'              => [
 				'type' => 'string',
 			],
+			'className'          => [
+				'type' => 'string',
+			],
 		];
 	}
 
