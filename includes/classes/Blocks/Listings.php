@@ -27,7 +27,7 @@ class Listings {
 		return [
 			'number'             => [
 				'type'    => 'number',
-				'default' => absint( pno_get_listings_results_per_page_options() ),
+				'default' => 10,
 			],
 			'show_featured_only' => [
 				'type'    => 'boolean',
